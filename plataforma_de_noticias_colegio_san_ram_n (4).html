@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Ramón Noticias • Red Social Escolar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        xblack: '#09090b',
+                        xcard: '#121216',
+                        xhover: '#1c1c22',
+                        xborder: '#27272f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #09090b;
+            color: #f4f4f5;
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #27272f;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+    </style>
+</head>
+<body class="bg-xblack text-gray-100 antialiased selection:bg-amber-400 selection:text-black">
+
+    <!-- CONTENEDOR PRINCIPAL DE 3 COLUMNAS -->
+    <div class="max-w-7xl mx-auto min-h-screen flex justify-center">
+
+        <!-- COLUMNA IZQUIERDA: NAVEGACIÓN -->
+        <aside class="hidden md:flex flex-col justify-between w-64 lg:w-72 sticky top-0 h-screen px-4 py-5 border-r border-xborder select-none">
+            <div class="space-y-6">
+                <!-- Logo / Marca -->
+                <div onclick="navigateToHome()" class="flex items-center gap-3 px-3 py-2 rounded-2xl hover:bg-xcard transition-colors cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-700 to-amber-500 p-0.5 shadow-lg shadow-red-950/50 flex-shrink-0">
+                        <div class="w-full h-full bg-xblack rounded-[10px] flex items-center justify-center font-black text-amber-400 text-base">
+                            SR
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-sm tracking-tight text-white leading-none">SAN RAMÓN</h1>
+                        <p class="text-[11px] text-amber-400 font-semibold mt-0.5">Comunidad Oficial</p>
+                    </div>
+                </div>
+
+                <!-- Menú de Categorías -->
+                <nav class="space-y-1.5">
+                    <button data-cat="all" onclick="filterCategory('all')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-bold text-white bg-xcard/60 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-amber-400">
+                            <i class="fa-solid fa-house text-base w-5 text-center"></i>
+                            <span class="text-white">Inicio</span>
+                        </div>
+                        <span class="active-dot w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="institucional" onclick="filterCategory('institucional')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-building-columns text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Institucional</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="deportes" onclick="filterCategory('deportes')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-trophy text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Deportes</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="cultura" onclick="filterCategory('cultura')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-palette text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Arte y Cultura</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="academico" onclick="filterCategory('academico')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-graduation-cap text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Académico</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="saved" onclick="filterCategory('saved')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-regular fa-bookmark text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Guardados</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button onclick="openProfileTab()" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <i class="fa-regular fa-user text-base w-5 text-center text-gray-400"></i>
+                        <span class="text-gray-200">Mi Perfil</span>
+                    </button>
+
+                    <!-- Botón de Clave Admin (se oculta al iniciar sesión admin) -->
+                    <button id="sidebarKeyItem" onclick="toggleAdminModal()" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-sm font-medium text-amber-400/90 hover:bg-amber-400/10 transition-all">
+                        <i class="fa-solid fa-key text-base w-5 text-center"></i>
+                        <span>Clave de Editor</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tarjeta de Cuenta Inferior -->
+            <div id="bottomProfileContainer" class="pt-4"></div>
+        </aside>
+
+        <!-- COLUMNA CENTRAL: MURO DE NOTICIAS O VISTA DE PERFIL -->
+        <main class="flex-1 max-w-2xl border-r border-xborder min-h-screen pb-20 md:pb-10">
+
+            <!-- VISTA 1: TIMELINE PRINCIPAL -->
+            <div id="timelineView">
+                <!-- Header Fijo -->
+                <header class="sticky top-0 z-30 bg-xblack/85 backdrop-blur-md border-b border-xborder">
+                    <div class="px-4 py-3.5 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <button onclick="openUserModal()" id="mobileUserBtn" class="md:hidden w-8 h-8 rounded-full bg-xcard border border-xborder flex items-center justify-center overflow-hidden">
+                                <i class="fa-regular fa-user text-amber-400 text-xs"></i>
+                            </button>
+                            <h2 id="feedHeaderTitle" class="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                                <span>Inicio • Noticias</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                            </h2>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <span id="postCountBadge" class="text-[11px] font-bold text-gray-400 bg-xcard border border-xborder px-2.5 py-1 rounded-full">
+                                0 posts
+                            </span>
+                            <!-- Botón Móvil Clave / Publicar -->
+                            <button id="mobileKeyBtn" onclick="toggleAdminModal()" class="md:hidden w-8 h-8 rounded-full bg-xcard border border-xborder text-amber-400 flex items-center justify-center" title="Clave de Editor">
+                                <i class="fa-solid fa-key text-xs"></i>
+                            </button>
+                            <button id="mobileNewPostBtn" onclick="openNewPostModal()" class="hidden md:hidden px-3 py-1.5 rounded-full bg-amber-400 text-black font-extrabold text-xs items-center gap-1 shadow-md">
+                                <i class="fa-solid fa-plus"></i> Post
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Buscador Móvil -->
+                    <div class="px-4 pb-3 lg:hidden">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                            <input type="text" id="searchInput" oninput="searchPosts()" placeholder="Buscar comunicados, eventos..." 
+                                class="w-full bg-xcard border border-xborder rounded-full pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
+
+                    <!-- Pestañas de Categorías -->
+                    <div class="flex items-center overflow-x-auto custom-scrollbar border-t border-xborder/60">
+                        <button data-cat="all" onclick="filterCategory('all')" class="x-tab-btn flex-1 min-w-fit px-4 py-3 text-xs sm:text-sm font-bold text-white border-b-2 border-amber-400 hover:bg-xhover transition-colors whitespace-nowrap">
+                            Para Ti
+                        </button>
+                        <button data-cat="institucional" onclick="filterCategory('institucional')" class="x-tab-btn flex-1 min-w-fit px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 border-b-2 border-transparent hover:bg-xhover hover:text-gray-200 transition-colors whitespace-nowrap">
+                            Institucional
+                        </button>
+                        <button data-cat="deportes" onclick="filterCategory('deportes')" class="x-tab-btn flex-1 min-w-fit px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 border-b-2 border-transparent hover:bg-xhover hover:text-gray-200 transition-colors whitespace-nowrap">
+                            Deportes
+                        </button>
+                        <button data-cat="cultura" onclick="filterCategory('cultura')" class="x-tab-btn flex-1 min-w-fit px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 border-b-2 border-transparent hover:bg-xhover hover:text-gray-200 transition-colors whitespace-nowrap">
+                            Cultura
+                        </button>
+                        <button data-cat="academico" onclick="filterCategory('academico')" class="x-tab-btn flex-1 min-w-fit px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 border-b-2 border-transparent hover:bg-xhover hover:text-gray-200 transition-colors whitespace-nowrap">
+                            Académico
+                        </button>
+                        <button data-cat="saved" onclick="filterCategory('saved')" class="x-tab-btn flex-1 min-w-fit px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 border-b-2 border-transparent hover:bg-xhover hover:text-gray-200 transition-colors whitespace-nowrap">
+                            Guardados
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Contenedor de Publicaciones -->
+                <div id="postsContainer" class="divide-y divide-xborder"></div>
+            </div>
+
+            <!-- VISTA 2: PERFIL DE USUARIO (RECARGADO COMO RED SOCIAL) -->
+            <div id="profileTabView" class="hidden">
+                <!-- Header Perfil -->
+                <div class="sticky top-0 z-30 bg-xblack/85 backdrop-blur-md border-b border-xborder px-4 py-3 flex items-center gap-4">
+                    <button onclick="navigateToHome()" class="w-9 h-9 rounded-full hover:bg-xhover flex items-center justify-center text-white transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 id="profileHeaderName" class="text-base font-extrabold text-white leading-tight">Mi Perfil</h2>
+                        <p id="profileHeaderStats" class="text-xs text-gray-400">0 guardados · 0 me gusta</p>
+                    </div>
+                </div>
+
+                <!-- Portada estilo Twitter/Instagram -->
+                <div class="h-36 sm:h-44 bg-gradient-to-r from-red-900 via-red-800 to-amber-600 relative">
+                    <div class="absolute inset-0 bg-black/25"></div>
+                </div>
+
+                <!-- Datos del Perfil -->
+                <div class="px-5 pb-5 border-b border-xborder">
+                    <div class="flex justify-between items-end -mt-12 sm:-mt-14 mb-4 relative z-10">
+                        <img id="profileMainAvatar" src="https://ui-avatars.com/api/?name=SR&background=991b1b&color=fff" alt="Avatar" 
+                            class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-xblack bg-xcard shadow-xl">
+                        <div class="flex gap-2">
+                            <button onclick="openUserModal()" class="px-4 py-2 rounded-full border border-xborder bg-xcard hover:bg-xhover text-xs font-bold text-white transition-colors">
+                                Editar Perfil
+                            </button>
+                            <button onclick="logoutUserAndReload()" class="px-4 py-2 rounded-full border border-rose-900/60 bg-rose-950/30 hover:bg-rose-950/60 text-xs font-bold text-rose-400 transition-colors">
+                                Salir
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="profileBioDetails" class="space-y-1"></div>
+                </div>
+
+                <!-- Sub-pestañas del Perfil -->
+                <div class="flex border-b border-xborder text-xs font-bold">
+                    <button id="subTabSavedBtn" onclick="switchProfileSubTab('saved')" class="flex-1 py-3.5 text-center text-white border-b-2 border-amber-400 hover:bg-xhover transition-colors">
+                        Guardados
+                    </button>
+                    <button id="subTabLikesBtn" onclick="switchProfileSubTab('likes')" class="flex-1 py-3.5 text-center text-gray-400 border-b-2 border-transparent hover:bg-xhover transition-colors">
+                        Me gusta
+                    </button>
+                </div>
+
+                <!-- Lista de Actividad del Perfil -->
+                <div id="profileActivityContainer" class="divide-y divide-xborder"></div>
+            </div>
+        </main>
+
+        <!-- COLUMNA DERECHA: BUSCADOR, BOTÓN (+) DE PUBLICACIÓN E INSIGNIA DEL COLEGIO -->
+        <aside class="hidden lg:block w-80 xl:w-96 px-6 py-5 space-y-5 sticky top-0 h-screen overflow-y-auto custom-scrollbar">
+            <!-- Buscador Desktop -->
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                <input type="text" oninput="syncSearch(this.value)" placeholder="Buscar en San Ramón..." 
+                    class="w-full bg-xcard border border-xborder rounded-full pl-10 pr-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors">
+            </div>
+
+            <!-- BOTÓN (+) DE NUEVA PUBLICACIÓN (VISIBLE SOLO AL PONER LA CLAVE) -->
+            <div id="rightSidebarPlusContainer" class="hidden bg-gradient-to-br from-amber-500/15 to-red-900/15 border border-amber-400/40 rounded-2xl p-4 space-y-3 shadow-lg">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-extrabold text-amber-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved"></i> Panel de Editor Activo
+                    </span>
+                    <button onclick="logoutAdmin()" class="text-[11px] text-gray-400 hover:text-rose-400 underline">
+                        Cerrar modo editor
+                    </button>
+                </div>
+                <button onclick="openNewPostModal()" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-black text-sm flex items-center justify-center gap-2 shadow-md transition-all transform active:scale-95">
+                    <i class="fa-solid fa-plus text-base"></i>
+                    <span>Nueva Publicación</span>
+                </button>
+            </div>
+
+            <!-- TARJETA INSTITUCIONAL CON LA INSIGNIA DEL COLEGIO SAN RAMÓN -->
+            <div class="bg-xcard border border-xborder rounded-3xl p-5 space-y-4 shadow-xl">
+                <div class="flex flex-col items-center text-center space-y-3">
+                    <!-- Insignia Oficial del Colegio San Ramón Cajamarca -->
+                    <div class="w-28 h-28 rounded-2xl bg-white p-2 shadow-lg border-2 border-amber-400 flex items-center justify-center overflow-hidden">
+                        <svg viewBox="0 0 220 260" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Escudo exterior amarillo y rojo -->
+                            <path d="M110 8 L202 45 C202 145 182 208 110 250 C38 208 18 145 18 45 Z" fill="#dc2626" stroke="#facc15" stroke-width="10"/>
+                            <!-- Banda diagonal blanca -->
+                            <path d="M23 165 L195 52 L199 95 L32 204 Z" fill="#ffffff"/>
+                            <!-- Óvalo central azul con borde amarillo -->
+                            <ellipse cx="110" cy="122" rx="56" ry="74" fill="#0284c7" stroke="#facc15" stroke-width="8"/>
+                            <!-- Arco emblemático y bandera -->
+                            <rect x="78" y="138" width="64" height="28" fill="#facc15" rx="2"/>
+                            <path d="M98 166 V150 A12 12 0 0 1 122 150 V166 Z" fill="#dc2626"/>
+                            <line x1="110" y1="86" x2="110" y2="138" stroke="#1e293b" stroke-width="3"/>
+                            <rect x="110" y="88" width="22" height="12" fill="#dc2626"/>
+                            <rect x="117" y="88" width="8" height="12" fill="#ffffff"/>
+                            <!-- Letras SR -->
+                            <text x="88" y="136" font-family="Arial Black, sans-serif" font-weight="900" font-size="44" fill="#facc15" stroke="#713f12" stroke-width="1.5" text-anchor="middle">S</text>
+                            <text x="132" y="136" font-family="Arial Black, sans-serif" font-weight="900" font-size="44" fill="#facc15" stroke="#713f12" stroke-width="1.5" text-anchor="middle">R</text>
+                            <!-- Texto Cajamarca -->
+                            <text x="110" y="218" font-family="Arial Black, sans-serif" font-weight="900" font-size="18" fill="#facc15" text-anchor="middle" letter-spacing="1">CAJAMARCA</text>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full mb-1">
+                            <i class="fa-solid fa-circle-check"></i> Portal Oficial
+                        </span>
+                        <h3 class="text-base font-black text-white">Colegio San Ramón</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Cajamarca • Emblemático y Centenario</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-xborder pt-4 space-y-3 text-xs">
+                    <div class="flex items-start gap-3 text-gray-300">
+                        <div class="w-8 h-8 rounded-xl bg-xblack border border-xborder flex items-center justify-center text-amber-400 flex-shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-gray-500 font-semibold">Dirección</p>
+                            <p class="font-bold text-gray-200">Av. 13 de Julio 275</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 text-gray-300">
+                        <div class="w-8 h-8 rounded-xl bg-xblack border border-xborder flex items-center justify-center text-amber-400 flex-shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-[11px] text-gray-500 font-semibold">Correo Institucional</p>
+                            <p class="font-bold text-gray-200 break-all">sanramonnoticias2@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- BARRA INFERIOR PARA MÓVILES -->
+    <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-xblack/95 backdrop-blur-md border-t border-xborder flex items-center justify-around py-2.5 px-2">
+        <button onclick="navigateToHome()" class="flex flex-col items-center gap-1 text-amber-400 text-xs">
+            <i class="fa-solid fa-house text-base"></i>
+            <span class="text-[10px] font-bold">Inicio</span>
+        </button>
+        <button onclick="filterCategory('saved')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white text-xs">
+            <i class="fa-regular fa-bookmark text-base"></i>
+            <span class="text-[10px] font-semibold">Guardados</span>
+        </button>
+        <button onclick="openProfileTab()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white text-xs">
+            <i class="fa-regular fa-user text-base"></i>
+            <span class="text-[10px] font-semibold">Perfil</span>
+        </button>
+    </nav>
+
+    <!-- MODAL 1: CLAVE DE EDITOR (CON CIERRE FÁCIL AL HACER CLIC FUERA, ESC O CANCELAR) -->
+    <div id="adminModal" onclick="if(event.target === this) closeAdminModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-xcard border border-xborder w-full max-w-sm rounded-3xl p-6 space-y-5 shadow-2xl relative">
+            <button type="button" onclick="closeAdminModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full hover:bg-xhover flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-amber-400/15 border border-amber-400/30 text-amber-400 flex items-center justify-center mx-auto text-lg">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-white">Acceso de Publicación</h3>
+                <p class="text-xs text-gray-400">Ingresa la clave autorizada del colegio para publicar noticias, fotos o videos.</p>
+            </div>
+
+            <div class="space-y-3">
+                <input type="password" id="adminPasswordInput" onkeydown="if(event.key==='Enter') verifyAdminKey()" placeholder="Ingresa la clave secreta..." 
+                    class="w-full bg-xblack border border-xborder rounded-2xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                <p id="authErrorMsg" class="hidden text-xs text-rose-400 font-semibold text-center">
+                    Clave incorrecta. Inténtalo nuevamente.
+                </p>
+            </div>
+
+            <div class="flex gap-2.5">
+                <button type="button" onclick="closeAdminModal()" class="flex-1 py-2.5 rounded-xl bg-xblack hover:bg-xhover border border-xborder text-xs font-bold text-gray-300 transition-colors">
+                    Cancelar
+                </button>
+                <button type="button" onclick="verifyAdminKey()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-xs font-extrabold text-black transition-all">
+                    Desbloquear
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CREAR / EDITAR CUENTA DE USUARIO -->
+    <div id="userModal" onclick="if(event.target === this) closeUserModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <form onsubmit="saveUserAccount(event)" class="bg-xcard border border-xborder w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl relative">
+            <button type="button" onclick="closeUserModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full hover:bg-xhover flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <h3 class="text-lg font-extrabold text-white">Tu Cuenta San Ramón</h3>
+                <p class="text-xs text-gray-400">Crea tu perfil con tu correo para comentar, dar Me gusta y guardar noticias.</p>
+            </div>
+
+            <!-- Avatar -->
+            <div class="flex flex-col items-center gap-2 pt-1">
+                <img id="avatarPreview" src="https://ui-avatars.com/api/?name=SR&background=991b1b&color=fff" alt="Avatar" class="w-20 h-20 rounded-full object-cover border-2 border-amber-400 shadow-md">
+                <label class="cursor-pointer text-xs font-bold text-amber-400 hover:underline">
+                    <i class="fa-solid fa-camera mr-1"></i> Cambiar foto de perfil
+                    <input type="file" accept="image/*" onchange="previewAvatarFile(event)" class="hidden">
+                </label>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Nombre completo</label>
+                    <input type="text" id="userNameInput" required placeholder="Ej. Carlos Mendoza" 
+                        class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Correo electrónico</label>
+                    <input type="email" id="userEmailInput" required placeholder="tucorreo@ejemplo.com" 
+                        class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Descripción o Grado/Sección (Opcional)</label>
+                    <input type="text" id="userBioInput" placeholder="Ej. Estudiante 5to A / Exalumno" 
+                        class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-2 pt-2">
+                <button type="button" id="logoutUserBtnModal" onclick="logoutUser(); closeUserModal();" class="hidden px-4 py-2.5 rounded-xl bg-rose-950/50 border border-rose-900 text-xs font-bold text-rose-400 hover:bg-rose-950 transition-colors">
+                    Cerrar sesión
+                </button>
+                <div class="flex gap-2 ml-auto">
+                    <button type="button" onclick="closeUserModal()" class="px-4 py-2.5 rounded-xl bg-xblack border border-xborder text-xs font-bold text-gray-300 hover:bg-xhover">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-xs font-extrabold text-black">
+                        Guardar Perfil
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- MODAL 3: CREAR NUEVA PUBLICACIÓN (SOLO ADMIN CON CLAVE) -->
+    <div id="newPostModal" onclick="if(event.target === this) closeNewPostModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <form id="createPostForm" onsubmit="handleCreatePost(event)" class="bg-xcard border border-xborder w-full max-w-lg rounded-3xl p-6 space-y-4 shadow-2xl relative max-h-[92vh] overflow-y-auto custom-scrollbar">
+            <button type="button" onclick="closeNewPostModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full hover:bg-xhover flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div>
+                <h3 class="text-lg font-extrabold text-white">Nueva Publicación Oficial</h3>
+                <p class="text-xs text-gray-400">Se publicará en tiempo real para toda la comunidad educativa.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Publicado por</label>
+                    <input type="text" id="postAuthor" required value="Dirección San Ramón" 
+                        class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">Categoría</label>
+                    <select id="postCategory" class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                        <option value="institucional">Institucional</option>
+                        <option value="deportes">Deportes</option>
+                        <option value="cultura">Arte y Cultura</option>
+                        <option value="academico">Académico</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">Titular de la noticia</label>
+                <input type="text" id="postTitle" required placeholder="Ej. Inicio de Olimpiadas Sanramoninas 2026" 
+                    class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">Contenido / Detalles</label>
+                <textarea id="postContent" rows="4" required placeholder="Escribe aquí todo el comunicado o noticia..." 
+                    class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-300 mb-1">Adjuntar Multimedia</label>
+                <select id="postMediaType" onchange="toggleMediaTypeInputs(this.value)" class="w-full bg-xblack border border-xborder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                    <option value="none">Solo texto</option>
+                    <option value="photo">Fotografía</option>
+                    <option value="video">Video</option>
+                </select>
+            </div>
+
+            <div id="mediaUploadContainer" style="display: none;" class="bg-xblack/60 border border-xborder rounded-2xl p-3.5 space-y-3">
+                <div>
+                    <label id="mediaFileLabel" class="block text-xs font-bold text-amber-400 mb-1">Subir Archivo</label>
+                    <input type="file" id="postMediaFile" accept="image/*" class="w-full text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-400 file:text-black hover:file:bg-amber-300">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-400 mb-1">O pegar enlace URL directo (opcional)</label>
+                    <input type="url" id="postMediaUrl" placeholder="https://..." 
+                        class="w-full bg-xblack border border-xborder rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="closeNewPostModal()" class="px-4 py-2.5 rounded-xl bg-xblack border border-xborder text-xs font-bold text-gray-300 hover:bg-xhover">
+                    Cancelar
+                </button>
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-xs font-extrabold text-black shadow-md">
+                    Publicar Ahora
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- TOAST NOTIFICACIÓN -->
+    <div id="toastMsg" class="fixed bottom-16 md:bottom-6 right-4 z-50 bg-xcard border border-amber-400/50 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs font-bold transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i class="fa-solid fa-circle-info text-amber-400 text-sm"></i>
+        <span id="toastText">Notificación</span>
+    </div>
+
+    <!-- SCRIPT CON SINCRONIZACIÓN EN LA NUBE EN TIEMPO REAL -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const SECRET_ADMIN_KEY = "sanramon2027.com";
+        let isAdminLoggedIn = sessionStorage.getItem('sr_admin_logged') === 'true';
+        let activeCategoryFilter = "all";
+        let activeProfileSubTab = "saved";
+        let tempUploadedAvatar = "";
+
+        let currentUser = JSON.parse(sessionStorage.getItem('sr_current_user')) || null;
+        let postsData = [];
+        let db = null;
+        let auth = null;
+        let firebaseUser = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'san-ramon-social';
+
+        // Inicializar Firebase para compartir posts entre dispositivos
+        async function initCloudStorage() {
+            try {
+                if (typeof __firebase_config !== 'undefined') {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    onAuthStateChanged(auth, (user) => {
+                        firebaseUser = user;
+                        if (user) {
+                            subscribeToPosts();
+                        }
+                    });
+                } else {
+                    renderPosts();
+                }
+            } catch (error) {
+                console.error("Error conectando almacenamiento en la nube:", error);
+                renderPosts();
+            }
+        }
+
+        function subscribeToPosts() {
+            if (!db || !firebaseUser) return;
+            const postsCol = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+            onSnapshot(postsCol, (snapshot) => {
+                const loaded = [];
+                snapshot.forEach((docSnap) => {
+                    loaded.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                loaded.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                postsData = loaded;
+
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('view') === 'profile') {
+                    renderProfilePageView();
+                } else {
+                    renderPosts();
+                }
+            }, (err) => {
+                console.error("Error leyendo posts:", err);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAdminStateUI();
+            updateUserUI();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const catFromUrl = urlParams.get('cat');
+            if (catFromUrl) {
+                activeCategoryFilter = catFromUrl;
+            }
+            updateCategoryTabsUI(activeCategoryFilter);
+
+            if (urlParams.get('view') === 'profile') {
+                renderProfilePageView();
+            } else {
+                renderPosts();
+            }
+
+            initCloudStorage();
+        });
+
+        window.showToast = function(message) {
+            const toast = document.getElementById('toastMsg');
+            document.getElementById('toastText').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3200);
+        };
+
+        // --- GESTIÓN DE CUENTAS DE USUARIO ---
+        window.openUserModal = function() {
+            const logoutBtn = document.getElementById('logoutUserBtnModal');
+            if (currentUser) {
+                document.getElementById('userNameInput').value = currentUser.name;
+                document.getElementById('userEmailInput').value = currentUser.email;
+                document.getElementById('userBioInput').value = currentUser.bio || '';
+                document.getElementById('avatarPreview').src = currentUser.avatar;
+                tempUploadedAvatar = currentUser.avatar;
+                logoutBtn.classList.remove('hidden');
+            } else {
+                document.getElementById('userNameInput').value = '';
+                document.getElementById('userEmailInput').value = '';
+                document.getElementById('userBioInput').value = '';
+                document.getElementById('avatarPreview').src = 'https://ui-avatars.com/api/?name=SR&background=991b1b&color=fff';
+                tempUploadedAvatar = '';
+                logoutBtn.classList.add('hidden');
+            }
+            document.getElementById('userModal').classList.remove('hidden');
+        };
+
+        window.closeUserModal = function() {
+            document.getElementById('userModal').classList.add('hidden');
+        };
+
+        window.previewAvatarFile = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                tempUploadedAvatar = e.target.result;
+                document.getElementById('avatarPreview').src = tempUploadedAvatar;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.saveUserAccount = function(e) {
+            e.preventDefault();
+            const name = document.getElementById('userNameInput').value.trim();
+            const email = document.getElementById('userEmailInput').value.trim();
+            const bio = document.getElementById('userBioInput').value.trim();
+            const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=991b1b&color=fff`;
+
+            currentUser = {
+                name: name,
+                email: email,
+                bio: bio || 'Miembro de la comunidad San Ramón',
+                avatar: tempUploadedAvatar || fallbackAvatar
+            };
+
+            sessionStorage.setItem('sr_current_user', JSON.stringify(currentUser));
+            updateUserUI();
+            closeUserModal();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('view') === 'profile') {
+                renderProfilePageView();
+            } else {
+                renderPosts();
+            }
+            showToast(`¡Bienvenido/a, ${currentUser.name}!`);
+        };
+
+        window.logoutUser = function() {
+            currentUser = null;
+            sessionStorage.removeItem('sr_current_user');
+            updateUserUI();
+            renderPosts();
+            showToast("Sesión cerrada.");
+        };
+
+        window.logoutUserAndReload = function() {
+            currentUser = null;
+            sessionStorage.removeItem('sr_current_user');
+            window.location.href = window.location.pathname;
+        };
+
+        function updateUserUI() {
+            const container = document.getElementById('bottomProfileContainer');
+            const mobileBtn = document.getElementById('mobileUserBtn');
+
+            if (currentUser) {
+                if (mobileBtn) {
+                    mobileBtn.innerHTML = `<img src="${currentUser.avatar}" class="w-full h-full object-cover rounded-full" alt="Perfil">`;
+                }
+                if (container) {
+                    container.innerHTML = `
+                        <div class="bg-xcard border border-xborder rounded-2xl p-3 flex items-center justify-between gap-2 hover:bg-xhover transition-colors">
+                            <div onclick="openProfileTab()" class="flex items-center gap-3 cursor-pointer flex-1 min-w-0">
+                                <img src="${currentUser.avatar}" alt="Avatar" class="w-10 h-10 rounded-full object-cover border border-amber-400 flex-shrink-0">
+                                <div class="min-w-0">
+                                    <p class="text-xs font-extrabold text-white truncate">${currentUser.name}</p>
+                                    <p class="text-[11px] text-gray-400 truncate">${currentUser.email}</p>
+                                </div>
+                            </div>
+                            <button onclick="openUserModal()" title="Editar cuenta" class="w-8 h-8 rounded-full hover:bg-xblack flex items-center justify-center text-gray-400 hover:text-amber-400 transition-colors flex-shrink-0">
+                                <i class="fa-solid fa-gear text-xs"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+            } else {
+                if (mobileBtn) {
+                    mobileBtn.innerHTML = `<i class="fa-regular fa-user text-amber-400 text-xs"></i>`;
+                }
+                if (container) {
+                    container.innerHTML = `
+                        <button onclick="openUserModal()" class="w-full bg-xcard hover:bg-xhover border border-xborder rounded-2xl p-3.5 flex items-center gap-3 transition-colors text-left">
+                            <div class="w-10 h-10 rounded-full bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 flex-shrink-0">
+                                <i class="fa-regular fa-user"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-extrabold text-white">Crear Cuenta</p>
+                                <p class="text-[11px] text-gray-400">Para comentar y dar like</p>
+                            </div>
+                        </button>
+                    `;
+                }
+            }
+        }
+
+        // --- PESTAÑA DE PERFIL ---
+        window.openProfileTab = function() {
+            if (!currentUser) {
+                showToast("Primero crea tu cuenta para ver tu perfil.");
+                openUserModal();
+                return;
+            }
+            window.location.href = window.location.pathname + '?view=profile';
+        };
+
+        window.navigateToHome = function() {
+            window.location.href = window.location.pathname;
+        };
+
+        window.closeProfileTab = function() {
+            document.getElementById('profileTabView').classList.add('hidden');
+            document.getElementById('timelineView').classList.remove('hidden');
+            if (window.location.search.includes('view=profile')) {
+                window.history.pushState({}, '', window.location.pathname);
+            }
+        };
+
+        window.switchProfileSubTab = function(tab) {
+            activeProfileSubTab = tab;
+            const savedBtn = document.getElementById('subTabSavedBtn');
+            const likesBtn = document.getElementById('subTabLikesBtn');
+
+            if (tab === 'saved') {
+                savedBtn.className = "flex-1 py-3.5 text-center text-white border-b-2 border-amber-400 hover:bg-xhover transition-colors";
+                likesBtn.className = "flex-1 py-3.5 text-center text-gray-400 border-b-2 border-transparent hover:bg-xhover transition-colors";
+            } else {
+                likesBtn.className = "flex-1 py-3.5 text-center text-white border-b-2 border-amber-400 hover:bg-xhover transition-colors";
+                savedBtn.className = "flex-1 py-3.5 text-center text-gray-400 border-b-2 border-transparent hover:bg-xhover transition-colors";
+            }
+            renderProfileActivityList();
+        };
+
+        function renderProfilePageView() {
+            if (!currentUser) {
+                window.location.href = window.location.pathname;
+                return;
+            }
+
+            document.getElementById('timelineView').classList.add('hidden');
+            document.getElementById('profileTabView').classList.remove('hidden');
+
+            const savedCount = postsData.filter(p => p.savedBy && p.savedBy.includes(currentUser.email)).length;
+            const likedCount = postsData.filter(p => p.likedBy && p.likedBy.includes(currentUser.email)).length;
+
+            document.getElementById('profileHeaderName').textContent = currentUser.name;
+            document.getElementById('profileHeaderStats').textContent = `${savedCount} guardados · ${likedCount} me gusta`;
+            document.getElementById('profileMainAvatar').src = currentUser.avatar;
+
+            document.getElementById('profileBioDetails').innerHTML = `
+                <h1 class="text-xl font-extrabold text-white flex items-center gap-2">
+                    <span>${currentUser.name}</span>
+                    <span class="text-[10px] font-bold bg-amber-400/15 text-amber-400 border border-amber-400/30 px-2.5 py-0.5 rounded-full">Comunidad SR</span>
+                </h1>
+                <p class="text-xs text-gray-400">${currentUser.email}</p>
+                <p class="text-sm text-gray-200 pt-2 leading-relaxed">${currentUser.bio}</p>
+                <div class="flex items-center gap-5 pt-3 text-xs text-gray-400">
+                    <span><strong class="text-white font-extrabold">${savedCount}</strong> Guardados</span>
+                    <span><strong class="text-white font-extrabold">${likedCount}</strong> Me gusta</span>
+                </div>
+            `;
+
+            renderProfileActivityList();
+        }
+
+        function renderProfileActivityList() {
+            const container = document.getElementById('profileActivityContainer');
+            let items = [];
+
+            if (activeProfileSubTab === 'saved') {
+                items = postsData.filter(p => p.savedBy && p.savedBy.includes(currentUser.email));
+            } else {
+                items = postsData.filter(p => p.likedBy && p.likedBy.includes(currentUser.email));
+            }
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="p-12 text-center space-y-2">
+                        <i class="fa-regular ${activeProfileSubTab === 'saved' ? 'fa-bookmark' : 'fa-heart'} text-2xl text-gray-500"></i>
+                        <p class="text-sm font-bold text-gray-300">
+                            ${activeProfileSubTab === 'saved' ? 'Aún no has guardado publicaciones' : 'Aún no has dado Me gusta'}
+                        </p>
+                        <p class="text-xs text-gray-500">Explora el muro principal para interactuar con las noticias del colegio.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(p => `
+                <div class="p-5 hover:bg-xcard/40 transition-colors space-y-2">
+                    <div class="flex items-center justify-between text-xs text-gray-400">
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-white">${p.author}</span>
+                            <i class="fa-solid fa-circle-check text-amber-400 text-[11px]"></i>
+                            <span>· ${p.date}</span>
+                        </div>
+                        <button onclick="navigateToHome()" class="text-amber-400 hover:underline font-bold">Ver en muro</button>
+                    </div>
+                    <h4 class="text-sm font-extrabold text-gray-100">${p.title}</h4>
+                    <p class="text-xs text-gray-300 leading-relaxed">${p.content}</p>
+                </div>
+            `).join('');
+        }
+
+        // --- AUTENTICACIÓN ADMIN ---
+        window.closeAdminModal = function() {
+            const modal = document.getElementById('adminModal');
+            if (modal) modal.classList.add('hidden');
+            const err = document.getElementById('authErrorMsg');
+            if (err) err.classList.add('hidden');
+            const input = document.getElementById('adminPasswordInput');
+            if (input) input.value = '';
+        };
+
+        window.toggleAdminModal = function() {
+            const modal = document.getElementById('adminModal');
+            if (!modal.classList.contains('hidden')) {
+                closeAdminModal();
+                return;
+            }
+            if (isAdminLoggedIn) {
+                logoutAdmin();
+                return;
+            }
+            document.getElementById('authErrorMsg').classList.add('hidden');
+            document.getElementById('adminPasswordInput').value = '';
+            modal.classList.remove('hidden');
+            setTimeout(() => document.getElementById('adminPasswordInput').focus(), 50);
+        };
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAdminModal();
+                closeUserModal();
+                closeNewPostModal();
+            }
+        });
+
+        window.verifyAdminKey = function() {
+            const inputKey = document.getElementById('adminPasswordInput').value;
+            if (inputKey === SECRET_ADMIN_KEY) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('sr_admin_logged', 'true');
+                updateAdminStateUI();
+                closeAdminModal();
+                showToast("¡Clave correcta! Modo Editor activado.");
+            } else {
+                document.getElementById('authErrorMsg').classList.remove('hidden');
+            }
+        };
+
+        window.logoutAdmin = function() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('sr_admin_logged');
+            updateAdminStateUI();
+            showToast("Modo Editor cerrado.");
+        };
+
+        function updateAdminStateUI() {
+            const mobileNewPostBtn = document.getElementById('mobileNewPostBtn');
+            const mobileKeyBtn = document.getElementById('mobileKeyBtn');
+            const sidebarKeyItem = document.getElementById('sidebarKeyItem');
+            const rightSidebarPlusContainer = document.getElementById('rightSidebarPlusContainer');
+
+            if (isAdminLoggedIn) {
+                if (sidebarKeyItem) sidebarKeyItem.classList.add('hidden');
+                if (mobileKeyBtn) mobileKeyBtn.classList.add('hidden');
+                if (rightSidebarPlusContainer) rightSidebarPlusContainer.classList.remove('hidden');
+                if (mobileNewPostBtn) {
+                    mobileNewPostBtn.classList.remove('hidden');
+                    mobileNewPostBtn.classList.add('inline-flex');
+                }
+            } else {
+                if (sidebarKeyItem) sidebarKeyItem.classList.remove('hidden');
+                if (mobileKeyBtn) mobileKeyBtn.classList.remove('hidden');
+                if (rightSidebarPlusContainer) rightSidebarPlusContainer.classList.add('hidden');
+                if (mobileNewPostBtn) {
+                    mobileNewPostBtn.classList.add('hidden');
+                    mobileNewPostBtn.classList.remove('inline-flex');
+                }
+            }
+            renderPosts();
+        }
+
+        window.openNewPostModal = function() {
+            if (!isAdminLoggedIn) {
+                toggleAdminModal();
+                return;
+            }
+            document.getElementById('newPostModal').classList.remove('hidden');
+        };
+
+        window.closeNewPostModal = function() {
+            document.getElementById('newPostModal').classList.add('hidden');
+            document.getElementById('createPostForm').reset();
+            toggleMediaTypeInputs('none');
+        };
+
+        window.toggleMediaTypeInputs = function(type) {
+            const container = document.getElementById('mediaUploadContainer');
+            const label = document.getElementById('mediaFileLabel');
+            const fileInput = document.getElementById('postMediaFile');
+
+            if (type === 'none') {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+                if (type === 'photo') {
+                    label.textContent = "Subir Archivo de Foto";
+                    fileInput.accept = "image/*";
+                } else if (type === 'video') {
+                    label.textContent = "Subir Archivo de Video";
+                    fileInput.accept = "video/*";
+                }
+            }
+        };
+
+        function compressImageDataUrl(dataUrl, callback) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                const maxDim = 1080;
+                if (width > maxDim || height > maxDim) {
+                    if (width > height) {
+                        height = Math.round((height * maxDim) / width);
+                        width = maxDim;
+                    } else {
+                        width = Math.round((width * maxDim) / height);
+                        height = maxDim;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                callback(canvas.toDataURL('image/jpeg', 0.8));
+            };
+            img.onerror = function() {
+                callback(dataUrl);
+            };
+            img.src = dataUrl;
+        }
+
+        window.handleCreatePost = function(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+
+            const author = document.getElementById('postAuthor').value.trim();
+            const category = document.getElementById('postCategory').value;
+            const mediaType = document.getElementById('postMediaType').value;
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const mediaUrl = document.getElementById('postMediaUrl').value.trim();
+            const mediaFile = document.getElementById('postMediaFile').files[0];
+
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' }) + 
+                                  ' · ' + now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+
+            const finalizePost = async (finalMedia) => {
+                const postId = Date.now().toString();
+                const newPost = {
+                    createdAt: Date.now(),
+                    author: author,
+                    date: formattedDate,
+                    category: category,
+                    mediaType: mediaType,
+                    title: title,
+                    content: content,
+                    media: finalMedia || null,
+                    likes: 0,
+                    likedBy: [],
+                    savedBy: [],
+                    comments: []
+                };
+
+                try {
+                    if (db && firebaseUser) {
+                        const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', postId);
+                        await setDoc(postRef, newPost);
+                    } else {
+                        postsData.unshift({ id: postId, ...newPost });
+                        renderPosts();
+                    }
+                    closeNewPostModal();
+                    showToast("¡Contenido publicado y visible en todos los dispositivos!");
+                } catch (err) {
+                    console.error("Error al publicar:", err);
+                    showToast("Error: El archivo es demasiado pesado para subirse directo. Usa un enlace URL.");
+                }
+            };
+
+            if (mediaFile) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    if (mediaFile.type.startsWith('image/')) {
+                        compressImageDataUrl(evt.target.result, (compressed) => {
+                            finalizePost(compressed);
+                        });
+                    } else {
+                        if (evt.target.result.length > 950000) {
+                            showToast("El video es muy pesado para subida directa. Pega un enlace URL de video.");
+                            return;
+                        }
+                        finalizePost(evt.target.result);
+                    }
+                };
+                reader.readAsDataURL(mediaFile);
+            } else {
+                finalizePost(mediaUrl);
+            }
+        };
+
+        window.deletePost = async function(id) {
+            if (!isAdminLoggedIn) return;
+            try {
+                if (db && firebaseUser) {
+                    const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', id);
+                    await deleteDoc(postRef);
+                } else {
+                    postsData = postsData.filter(p => p.id !== id);
+                    renderPosts();
+                }
+                showToast("Publicación eliminada para todos.");
+            } catch (err) {
+                console.error("Error al eliminar:", err);
+                showToast("No se pudo eliminar la publicación.");
+            }
+        };
+
+        // --- INTERACCIONES SINCRONIZADAS ---
+        window.toggleLike = async function(id) {
+            if (!currentUser) {
+                showToast("Crea tu cuenta para dar Me gusta.");
+                openUserModal();
+                return;
+            }
+
+            const post = postsData.find(p => p.id === id);
+            if (post) {
+                const likedBy = Array.isArray(post.likedBy) ? [...post.likedBy] : [];
+                let likes = post.likes || 0;
+                const userIndex = likedBy.indexOf(currentUser.email);
+                if (userIndex > -1) {
+                    likedBy.splice(userIndex, 1);
+                    likes = Math.max(0, likes - 1);
+                } else {
+                    likedBy.push(currentUser.email);
+                    likes++;
+                }
+
+                if (db && firebaseUser) {
+                    const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', id);
+                    await updateDoc(postRef, { likedBy, likes });
+                } else {
+                    post.likedBy = likedBy;
+                    post.likes = likes;
+                    renderPosts();
+                }
+            }
+        };
+
+        window.toggleBookmark = async function(id) {
+            if (!currentUser) {
+                showToast("Crea tu cuenta para guardar publicaciones.");
+                openUserModal();
+                return;
+            }
+
+            const post = postsData.find(p => p.id === id);
+            if (post) {
+                const savedBy = Array.isArray(post.savedBy) ? [...post.savedBy] : [];
+                const idx = savedBy.indexOf(currentUser.email);
+                if (idx > -1) {
+                    savedBy.splice(idx, 1);
+                    showToast("Eliminado de guardados.");
+                } else {
+                    savedBy.push(currentUser.email);
+                    showToast("¡Guardado en tu perfil!");
+                }
+
+                if (db && firebaseUser) {
+                    const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', id);
+                    await updateDoc(postRef, { savedBy });
+                } else {
+                    post.savedBy = savedBy;
+                    renderPosts();
+                }
+            }
+        };
+
+        window.addComment = async function(e, id) {
+            e.preventDefault();
+            if (!currentUser) {
+                showToast("Crea tu cuenta para comentar.");
+                openUserModal();
+                return;
+            }
+
+            const input = document.getElementById(`comment-input-${id}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const post = postsData.find(p => p.id === id);
+            if (post) {
+                const comments = Array.isArray(post.comments) ? [...post.comments] : [];
+                comments.push({
+                    author: currentUser.name,
+                    avatar: currentUser.avatar,
+                    text: text
+                });
+                input.value = '';
+
+                if (db && firebaseUser) {
+                    const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', id);
+                    await updateDoc(postRef, { comments });
+                } else {
+                    post.comments = comments;
+                    renderPosts();
+                }
+            }
+        };
+
+        // --- FILTROS Y SELECCIÓN VISUAL DE CATEGORÍAS ---
+        function updateCategoryTabsUI(cat) {
+            document.querySelectorAll('.x-tab-btn').forEach(btn => {
+                const btnCat = btn.getAttribute('data-cat');
+                if (btnCat === cat) {
+                    btn.classList.remove('font-medium', 'text-gray-400', 'border-transparent', 'hover:text-gray-200');
+                    btn.classList.add('font-bold', 'text-white', 'border-amber-400');
+                } else {
+                    btn.classList.remove('font-bold', 'text-white', 'border-amber-400');
+                    btn.classList.add('font-medium', 'text-gray-400', 'border-transparent', 'hover:text-gray-200');
+                }
+            });
+
+            document.querySelectorAll('.x-nav-item').forEach(item => {
+                const itemCat = item.getAttribute('data-cat');
+                const dot = item.querySelector('.active-dot');
+                const iconBox = item.querySelector('div');
+                if (itemCat === cat) {
+                    item.classList.remove('text-gray-300', 'font-medium');
+                    item.classList.add('text-white', 'font-bold', 'bg-xcard/60');
+                    if (dot) dot.classList.remove('hidden');
+                    if (iconBox) {
+                        iconBox.classList.remove('text-gray-400');
+                        iconBox.classList.add('text-amber-400');
+                    }
+                } else {
+                    item.classList.remove('text-white', 'font-bold', 'bg-xcard/60');
+                    item.classList.add('text-gray-300', 'font-medium');
+                    if (dot) dot.classList.add('hidden');
+                    if (iconBox) {
+                        iconBox.classList.remove('text-amber-400');
+                        iconBox.classList.add('text-gray-400');
+                    }
+                }
+            });
+        }
+
+        window.filterCategory = function(cat) {
+            closeProfileTab();
+            activeCategoryFilter = cat;
+
+            const newUrl = cat === 'all' ? window.location.pathname : `${window.location.pathname}?cat=${cat}`;
+            window.history.pushState({ cat }, '', newUrl);
+
+            updateCategoryTabsUI(cat);
+
+            const titles = {
+                all: "Inicio • Noticias",
+                institucional: "Institucional",
+                deportes: "Deportes",
+                cultura: "Arte y Cultura",
+                academico: "Académico",
+                saved: "Publicaciones Guardadas"
+            };
+            document.getElementById('feedHeaderTitle').innerHTML = `<span>${titles[cat] || "Inicio"}</span><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>`;
+            renderPosts();
+        };
+
+        window.syncSearch = function(val) {
+            document.getElementById('searchInput').value = val;
+            renderPosts();
+        };
+
+        window.searchPosts = function() {
+            renderPosts();
+        };
+
+        // --- RENDERIZADO DEL MURO ---
+        function renderPosts() {
+            const container = document.getElementById('postsContainer');
+            const searchKeyword = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = postsData.filter(post => {
+                let matchesCategory = true;
+                if (activeCategoryFilter === 'saved') {
+                    matchesCategory = currentUser && post.savedBy && post.savedBy.includes(currentUser.email);
+                } else if (activeCategoryFilter !== 'all') {
+                    matchesCategory = post.category === activeCategoryFilter;
+                }
+
+                const matchesSearch = post.title.toLowerCase().includes(searchKeyword) || 
+                                      post.content.toLowerCase().includes(searchKeyword) ||
+                                      post.author.toLowerCase().includes(searchKeyword);
+                return matchesCategory && matchesSearch;
+            });
+
+            document.getElementById('postCountBadge').textContent = `${filtered.length} ${filtered.length === 1 ? 'post' : 'posts'}`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="p-16 text-center space-y-3.5">
+                        <div class="w-16 h-16 bg-xcard border border-xborder rounded-2xl flex items-center justify-center mx-auto text-amber-400 text-2xl shadow-inner">
+                            <i class="fa-regular fa-newspaper"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-base">
+                            ${activeCategoryFilter === 'saved' ? 'No tienes publicaciones guardadas' : 'Aún no hay publicaciones en esta sección'}
+                        </h3>
+                        <p class="text-xs text-gray-400 max-w-sm mx-auto leading-relaxed">
+                            ${activeCategoryFilter === 'saved' 
+                                ? 'Guarda publicaciones con el ícono de marcador para verlas aquí.' 
+                                : 'Ingresa la clave de editor para subir fotos, videos y comunicados oficiales visibles para todos.'}
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(post => {
+                const categoryBadge = {
+                    institucional: '<span class="bg-red-950/80 text-red-400 border border-red-900/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Institucional</span>',
+                    deportes: '<span class="bg-emerald-950/80 text-emerald-400 border border-emerald-900/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Deportes</span>',
+                    cultura: '<span class="bg-amber-950/80 text-amber-400 border border-amber-900/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Arte y Cultura</span>',
+                    academico: '<span class="bg-indigo-950/80 text-indigo-400 border border-indigo-900/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Académico</span>'
+                }[post.category] || '';
+
+                let mediaHtml = '';
+                if (post.media) {
+                    if (post.mediaType === 'video' || (post.media.startsWith('data:video') || post.media.includes('.mp4'))) {
+                        mediaHtml = `
+                            <div class="w-full rounded-2xl overflow-hidden bg-xcard border border-xborder shadow-lg">
+                                <video controls class="w-full max-h-[420px] object-cover">
+                                    <source src="${post.media}" type="video/mp4">
+                                    Tu navegador no soporta videos.
+                                </video>
+                            </div>
+                        `;
+                    } else {
+                        mediaHtml = `
+                            <div class="w-full max-h-[420px] overflow-hidden rounded-2xl bg-xcard border border-xborder shadow-lg">
+                                <img src="${post.media}" alt="Contenido" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                            </div>
+                        `;
+                    }
+                }
+
+                const isLikedByCurrentUser = currentUser && post.likedBy && post.likedBy.includes(currentUser.email);
+                const isSavedByCurrentUser = currentUser && post.savedBy && post.savedBy.includes(currentUser.email);
+
+                const commentsHtml = (post.comments || []).map(c => `
+                    <div class="bg-xcard p-3 rounded-2xl text-xs flex items-start gap-3 border border-xborder/80">
+                        <img src="${c.avatar}" alt="Avatar" class="w-7 h-7 rounded-full object-cover flex-shrink-0 mt-0.5 border border-amber-400/40">
+                        <div class="space-y-1 flex-1 min-w-0">
+                            <span class="font-bold text-gray-200 block">${c.author}</span>
+                            <span class="text-gray-300 leading-relaxed break-words">${c.text}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                return `
+                    <article class="p-5 hover:bg-xcard/40 transition-colors">
+                        <div class="flex gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-red-600 to-amber-400 p-0.5 flex-shrink-0 shadow-md">
+                                <div class="w-full h-full bg-xblack rounded-[14px] flex items-center justify-center font-extrabold text-sm text-amber-400">
+                                    ${post.author.charAt(0).toUpperCase()}
+                                </div>
+                            </div>
+
+                            <div class="flex-1 min-w-0 space-y-3">
+                                <div class="flex items-start justify-between gap-2">
+                                    <div>
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <h3 class="font-extrabold text-sm text-white leading-snug">${post.author}</h3>
+                                            <i class="fa-solid fa-circle-check text-amber-400 text-xs" title="Cuenta Oficial Verificada"></i>
+                                            ${categoryBadge}
+                                        </div>
+                                        <p class="text-[11px] text-gray-400 mt-0.5">${post.date}</p>
+                                    </div>
+
+                                    ${isAdminLoggedIn ? `
+                                        <button onclick="deletePost('${post.id}')" title="Eliminar publicación" class="text-gray-500 hover:text-rose-500 p-2 rounded-xl hover:bg-rose-950/40 transition-colors">
+                                            <i class="fa-regular fa-trash-can text-sm"></i>
+                                        </button>
+                                    ` : ''}
+                                </div>
+
+                                <div class="space-y-1.5">
+                                    <h2 class="text-base font-extrabold text-gray-100 leading-snug">${post.title}</h2>
+                                    <p class="text-sm text-gray-300 leading-relaxed whitespace-pre-line">${post.content}</p>
+                                </div>
+
+                                ${mediaHtml}
+
+                                <div class="pt-1 flex items-center justify-between text-xs font-semibold text-gray-400 max-w-sm">
+                                    <button onclick="toggleLike('${post.id}')" class="flex items-center gap-2 group ${isLikedByCurrentUser ? 'text-rose-500' : 'hover:text-rose-500'} transition-colors">
+                                        <span class="p-2 rounded-xl group-hover:bg-rose-500/10 transition-colors">
+                                            <i class="${isLikedByCurrentUser ? 'fa-solid' : 'fa-regular'} fa-heart text-base"></i>
+                                        </span>
+                                        <span>${post.likes || 0}</span>
+                                    </button>
+
+                                    <div class="flex items-center gap-2 text-gray-400">
+                                        <span class="p-2">
+                                            <i class="fa-regular fa-comment text-base"></i>
+                                        </span>
+                                        <span>${(post.comments || []).length}</span>
+                                    </div>
+
+                                    <button onclick="toggleBookmark('${post.id}')" title="Guardar en tu perfil" class="flex items-center gap-2 group ${isSavedByCurrentUser ? 'text-amber-400' : 'hover:text-amber-400'} transition-colors">
+                                        <span class="p-2 rounded-xl group-hover:bg-amber-400/10 transition-colors">
+                                            <i class="${isSavedByCurrentUser ? 'fa-solid' : 'fa-regular'} fa-bookmark text-base"></i>
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div class="pt-3 border-t border-xborder/60 space-y-3">
+                                    ${(post.comments || []).length > 0 ? `
+                                        <div class="space-y-2.5 max-h-56 overflow-y-auto custom-scrollbar">
+                                            ${commentsHtml}
+                                        </div>
+                                    ` : ''}
+
+                                    <form onsubmit="addComment(event, '${post.id}')" class="flex items-center gap-2.5 pt-1">
+                                        ${currentUser ? `<img src="${currentUser.avatar}" class="w-8 h-8 rounded-full object-cover border border-amber-400 flex-shrink-0">` : ''}
+                                        <input type="text" id="comment-input-${post.id}" placeholder="${currentUser ? 'Escribe tu comentario...' : 'Crea tu cuenta para comentar...'}" 
+                                            class="flex-1 bg-xblack border border-xborder rounded-full px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors">
+                                        <button type="submit" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-extrabold text-xs px-5 py-2.5 rounded-full shadow-md transition-all">
+                                            Enviar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
