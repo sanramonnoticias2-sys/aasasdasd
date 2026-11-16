@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Ramón Noticias • Red Social Escolar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        xblack: '#09090b',
+                        xcard: '#121216',
+                        xhover: '#1c1c22',
+                        xborder: '#27272f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #09090b;
+            color: #f4f4f5;
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #27272f;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+    </style>
+</head>
+<body class="bg-xblack text-gray-100 antialiased selection:bg-amber-400 selection:text-black">
+
+    <!-- CONTENEDOR PRINCIPAL DE 3 COLUMNAS -->
+    <div class="max-w-7xl mx-auto min-h-screen flex justify-center">
+
+        <!-- COLUMNA IZQUIERDA: NAVEGACIÓN -->
+        <aside class="hidden md:flex flex-col justify-between w-64 lg:w-72 sticky top-0 h-screen px-4 py-5 border-r border-xborder select-none">
+            <div class="space-y-6">
+                <!-- Logo / Marca -->
+                <div onclick="navigateToHome()" class="flex items-center gap-3 px-3 py-2 rounded-2xl hover:bg-xcard transition-colors cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-700 to-amber-500 p-0.5 shadow-lg shadow-red-950/50 flex-shrink-0">
+                        <div class="w-full h-full bg-xblack rounded-[10px] flex items-center justify-center font-black text-amber-400 text-base">
+                            SR
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-sm tracking-tight text-white leading-none">SAN RAMÓN</h1>
+                        <p class="text-[11px] text-amber-400 font-semibold mt-0.5">Comunidad Oficial</p>
+                    </div>
+                </div>
+
+                <!-- Menú de Categorías -->
+                <nav class="space-y-1.5">
+                    <button data-cat="all" onclick="filterCategory('all')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-bold text-white bg-xcard/60 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-amber-400">
+                            <i class="fa-solid fa-house text-base w-5 text-center"></i>
+                            <span class="text-white">Inicio</span>
+                        </div>
+                        <span class="active-dot w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="institucional" onclick="filterCategory('institucional')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-building-columns text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Institucional</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="deportes" onclick="filterCategory('deportes')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-trophy text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Deportes</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="cultura" onclick="filterCategory('cultura')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-palette text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Arte y Cultura</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="academico" onclick="filterCategory('academico')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-solid fa-graduation-cap text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Académico</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button data-cat="saved" onclick="filterCategory('saved')" class="x-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <div class="flex items-center gap-3.5 text-gray-400">
+                            <i class="fa-regular fa-bookmark text-base w-5 text-center"></i>
+                            <span class="text-gray-200">Guardados</span>
+                        </div>
+                        <span class="active-dot hidden w-2 h-2 rounded-full bg-amber-400"></span>
+                    </button>
+
+                    <button onclick="openProfileTab()" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-sm font-medium text-gray-300 hover:bg-xhover transition-all">
+                        <i class="fa-regular fa-user text-base w-5 text-center text-gray-400"></i>
+                        <span class="text-gray-200">Mi Perfil</span>
+                    </button>
+
+                    <!-- Botón de Clave Admin -->
+                    <button id="sidebarKeyItem" onclick="toggleAdminModal()" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl text-sm font-medium text-amber-400/90 hover:bg-amber-400/10 transition-all">
+                        <i class="fa-solid fa-key text-base w-5 text-center"></i>
+                        <span>Clave de Editor</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tarjeta de Cuenta Inferior -->
+            <div id="bottomProfileContainer" class="pt-4"></div>
+        </aside>
+
+        <!-- COLUMNA CENTRAL: MURO DE NOTICIAS O VISTA DE PERFIL -->
+        <main class="flex-1 max-w-2xl border-r border-xborder min-h-screen pb-20 md:pb-10">
+
+            <!-- VISTA 1: TIMELINE PRINCIPAL -->
+            <div id="timelineView">
+                <!-- Header Fijo -->
+                <header class="sticky top-0 z-30 bg-xblack/85 backdrop-blur-md border-b border-xborder">
+                    <div class="px-4 py-3.5 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <button onclick="openUserModal()" id="mobileUserBtn" class="md:hidden w-8 h-8 rounded-full bg-xcard border border-xborder flex items-center
